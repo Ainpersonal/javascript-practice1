@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Belajar Logika & Loop JavaScript</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baumans&family=Lexend:wght@100..900&family=Short+Stack&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-practice.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-tag">JavaScript Boolean, Logika &amp; Loop</div>
+    <h1>Belajar <span class="accent">true</span> &amp; <span class="accent2">false</span></h1>
+    <p class="subtitle">Pahami operator logika dan perulangan lewat contoh nyata yang bisa kamu coba sendiri</p>
+    <nav class="top-nav">
+      <a href="#boolean">Boolean</a>
+      <a href="#and">&amp;&amp;</a>
+      <a href="#or">||</a>
+      <a href="#not">!</a>
+      <a href="#for">for</a>
+      <a href="#while">while</a>
+      <a href="#break">break</a>
+      <a href="#continue">continue</a>
+      <a href="#controlflow">control flow</a>
+      <a href="#quiz">Kuis</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- 01 BOOLEAN -->
+    <section class="section" id="boolean">
+      <div class="section-label">01 — Boolean</div>
+      <h2>True dan False itu seperti saklar</h2>
+      <p class="desc">Klik saklar di bawah untuk melihat bagaimana <code>true</code> dan <code>false</code> bekerja.</p>
+      <div class="switch-demo">
+        <div class="switch-card" id="card-lampu">
+          <div class="switch-icon" id="icon-lampu">💡</div>
+          <div class="switch-label" id="label-lampu">Lampu: <strong>MATI</strong></div>
+          <div class="code-preview" id="code-lampu">let lampu = <span class="val-false">false</span>;</div>
+          <button class="btn-toggle" onclick="toggleSwitch('lampu')">Nyalakan</button>
+        </div>
+        <div class="switch-card" id="card-pintu">
+          <div class="switch-icon" id="icon-pintu">🚪</div>
+          <div class="switch-label" id="label-pintu">Pintu: <strong>TERTUTUP</strong></div>
+          <div class="code-preview" id="code-pintu">let pintu = <span class="val-false">false</span>;</div>
+          <button class="btn-toggle" onclick="toggleSwitch('pintu')">Buka</button>
+        </div>
+        <div class="switch-card" id="card-login">
+          <div class="switch-icon" id="icon-login">🔒</div>
+          <div class="switch-label" id="label-login">Login: <strong>BELUM</strong></div>
+          <div class="code-preview" id="code-login">let sudahLogin = <span class="val-false">false</span>;</div>
+          <button class="btn-toggle" onclick="toggleSwitch('login')">Login</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 AND -->
+    <section class="section" id="and">
+      <div class="section-label">02 — Operator &&</div>
+      <h2>DAN <code class="op">&amp;&amp;</code> — Keduanya harus benar</h2>
+      <p class="desc">Centang kondisi di bawah. Pintu hanya akan terbuka jika <strong>keduanya</strong> terpenuhi.</p>
+      <div class="logic-demo">
+        <div class="conditions">
+          <label class="check-label"><input type="checkbox" id="chk-umur" onchange="updateAnd()" /><span>Umur &ge; 18 tahun</span></label>
+          <label class="check-label"><input type="checkbox" id="chk-tiket" onchange="updateAnd()" /><span>Punya tiket masuk</span></label>
+        </div>
+        <div class="logic-arrow">→</div>
+        <div class="result-box" id="result-and">
+          <div class="result-icon">🚫</div>
+          <div class="result-text">Tidak boleh masuk</div>
+          <div class="result-code" id="code-and">umur18 &amp;&amp; punyaTiket = <span class="val-false">false</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 OR -->
+    <section class="section" id="or">
+      <div class="section-label">03 — Operator ||</div>
+      <h2>ATAU <code class="op">||</code> — Salah satu sudah cukup</h2>
+      <p class="desc">Centang salah satu saja sudah cukup untuk mendapat diskon!</p>
+      <div class="logic-demo">
+        <div class="conditions">
+          <label class="check-label"><input type="checkbox" id="chk-pelajar" onchange="updateOr()" /><span>Pelajar / Mahasiswa</span></label>
+          <label class="check-label"><input type="checkbox" id="chk-lansia" onchange="updateOr()" /><span>Lansia (60+ tahun)</span></label>
+        </div>
+        <div class="logic-arrow">→</div>
+        <div class="result-box" id="result-or">
+          <div class="result-icon">❌</div>
+          <div class="result-text">Tidak dapat diskon</div>
+          <div class="result-code" id="code-or">pelajar || lansia = <span class="val-false">false</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 NOT -->
+    <section class="section" id="not">
+      <div class="section-label">04 — Operator !</div>
+      <h2>BUKAN <code class="op">!</code> — Membalik nilai</h2>
+      <p class="desc">Ketik sesuatu di bawah, lalu lihat bagaimana <code>!</code> membalik hasilnya.</p>
+      <div class="not-demo">
+        <input type="text" id="input-not" placeholder="Ketik sesuatu..." oninput="updateNot()" />
+        <div class="not-result">
+          <div class="not-row">
+            <span class="not-label">Nilai asli:</span>
+            <span class="not-value" id="val-original">""</span>
+            <span class="not-bool" id="bool-original">→ <span class="val-false">false</span></span>
+          </div>
+          <div class="not-row">
+            <span class="not-label">Setelah <code>!</code>:</span>
+            <span class="not-value" id="val-not">!""</span>
+            <span class="not-bool" id="bool-not">→ <span class="val-true">true</span></span>
+          </div>
+          <div class="not-row">
+            <span class="not-label">Setelah <code>!!</code>:</span>
+            <span class="not-value" id="val-not2">!!""</span>
+            <span class="not-bool" id="bool-not2">→ <span class="val-false">false</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 FOR LOOP -->
+    <section class="section" id="for">
+      <div class="section-label">05 — Loop for</div>
+      <h2>Loop <code class="op">for</code> — Ulangi sekian kali</h2>
+      <p class="desc">
+        Loop <code>for</code> dipakai saat kamu sudah <strong>tahu berapa kali</strong> ingin mengulang.
+        Bayangkan kamu menghitung langkah dari 1 sampai 10 — kamu tahu angka awal dan akhirnya.
+      </p>
+
+      <div class="anatomy-box">
+        <div class="anatomy-title">Anatomi loop <code>for</code> — 3 bagian dipisah titik koma:</div>
+        <div class="anatomy-code">
+          <span class="kw">for</span> ( <span class="part-a">let i = 0</span> ; <span class="part-b">i &lt; 5</span> ; <span class="part-c">i++</span> ) { ... }
+        </div>
+        <div class="anatomy-labels">
+          <div class="alabel a">① Mulai<br><small>set nilai awal i</small></div>
+          <div class="alabel b">② Syarat<br><small>lanjut jika masih true</small></div>
+          <div class="alabel c">③ Langkah<br><small>i++ = tambah 1 tiap putaran</small></div>
+        </div>
+      </div>
+
+      <div class="loop-demo">
+        <div class="loop-controls">
+          <label class="loop-label">Mulai dari: <input type="number" id="for-start" value="1" min="0" max="20" /></label>
+          <label class="loop-label">Sampai: <input type="number" id="for-end" value="5" min="1" max="20" /></label>
+          <label class="loop-label">Langkah (i+=): <input type="number" id="for-step" value="1" min="1" max="5" /></label>
+          <button class="btn-run" onclick="runFor()">▶ Jalankan</button>
+        </div>
+        <div class="loop-output-wrap">
+          <div class="loop-code-label">Kode:</div>
+          <div class="loop-code-display" id="for-code-display"></div>
+          <div class="loop-output-label">Output:</div>
+          <div class="loop-output" id="for-output"></div>
+        </div>
+      </div>
+
+      <div class="example-cards">
+        <div class="example-card">
+          <div class="example-title">Contoh: hitung mundur</div>
+          <pre class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">5</span>; i >= <span class="num">1</span>; i--) {
+  console.log(i);
+}
+<span class="comment">// Output: 5, 4, 3, 2, 1</span>
+<span class="comment">// i-- artinya kurangi 1 tiap putaran</span></pre>
+        </div>
+        <div class="example-card">
+          <div class="example-title">Contoh: loop array buah</div>
+          <pre class="code-block"><span class="kw">const</span> buah = [<span class="str">"Apel"</span>, <span class="str">"Mangga"</span>, <span class="str">"Jeruk"</span>];
+
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; buah.length; i++) {
+  console.log(buah[i]);
+}
+<span class="comment">// buah.length = 3</span>
+<span class="comment">// Output: Apel, Mangga, Jeruk</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 WHILE LOOP -->
+    <section class="section" id="while">
+      <div class="section-label">06 — Loop while</div>
+      <h2>Loop <code class="op">while</code> — Ulangi selama syarat terpenuhi</h2>
+      <p class="desc">
+        Loop <code>while</code> dipakai saat kamu <strong>tidak tahu pasti berapa kali</strong> akan mengulang.
+        Seperti menunggu sampai hujan berhenti — kamu tidak tahu akan berapa lama, hanya tahu kapan harus berhenti.
+      </p>
+
+      <div class="anatomy-box">
+        <div class="anatomy-title">Perbandingan <code>for</code> vs <code>while</code>:</div>
+        <div class="compare-row">
+          <div class="compare-col">
+            <div class="compare-label op-color">for — jumlah sudah diketahui</div>
+            <pre class="code-block sm"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+  <span class="comment">// diulang tepat 5 kali</span>
+}</pre>
+          </div>
+          <div class="compare-col">
+            <div class="compare-label" style="color:var(--accent)">while — berhenti saat syarat false</div>
+            <pre class="code-block sm"><span class="kw">let</span> uang = <span class="num">100</span>;
+<span class="kw">while</span> (uang > <span class="num">0</span>) {
+  uang -= <span class="num">25</span>; <span class="comment">// beli jajan</span>
+}
+<span class="comment">// berhenti saat uang habis</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="loop-demo">
+        <div class="loop-controls">
+          <label class="loop-label">Nilai awal: <input type="number" id="while-start" value="10" min="1" max="50" /></label>
+          <label class="loop-label">Kurangi tiap putaran: <input type="number" id="while-minus" value="3" min="1" max="10" /></label>
+          <button class="btn-run" onclick="runWhile()">▶ Jalankan</button>
+        </div>
+        <div class="loop-output-wrap">
+          <div class="loop-code-label">Kode:</div>
+          <div class="loop-code-display" id="while-code-display"></div>
+          <div class="loop-output-label">Output:</div>
+          <div class="loop-output" id="while-output"></div>
+        </div>
+      </div>
+
+      <div class="example-cards">
+        <div class="example-card">
+          <div class="example-title">Contoh: do...while</div>
+          <pre class="code-block"><span class="comment">// do...while: jalankan DULU, cek syarat kemudian</span>
+<span class="comment">// Dijamin jalan minimal 1 kali</span>
+<span class="kw">let</span> angka = <span class="num">0</span>;
+
+<span class="kw">do</span> {
+  console.log(<span class="str">"Angka:"</span>, angka);
+  angka++;
+} <span class="kw">while</span> (angka &lt; <span class="num">3</span>);
+
+<span class="comment">// Output: Angka: 0, Angka: 1, Angka: 2</span></pre>
+        </div>
+        <div class="example-card">
+          <div class="example-title">Hati-hati: infinite loop!</div>
+          <pre class="code-block"><span class="comment">// ❌ JANGAN dilakukan — loop tanpa akhir!</span>
+<span class="kw">let</span> i = <span class="num">0</span>;
+<span class="kw">while</span> (<span class="kw">true</span>) {
+  console.log(i);
+  <span class="comment">// lupa i++ → browser akan freeze!</span>
+}
+
+<span class="comment">// ✅ Selalu pastikan ada yang mengubah</span>
+<span class="comment">// kondisi agar loop bisa berhenti</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 BREAK -->
+    <section class="section" id="break">
+      <div class="section-label">07 — break</div>
+      <h2><code class="op">break</code> — Keluar paksa dari loop</h2>
+      <p class="desc">
+        <code>break</code> adalah tombol darurat — langsung <strong>menghentikan loop sepenuhnya</strong>
+        meski syarat loop masih terpenuhi. Sangat berguna saat sudah menemukan data yang dicari.
+      </p>
+
+      <div class="flow-visual">
+        <div class="flow-step">Putaran 1 — cek... belum ketemu</div>
+        <div class="flow-step">Putaran 2 — cek... belum ketemu</div>
+        <div class="flow-step break-step">Putaran 3 — KETEMU! → break 🛑</div>
+        <div class="flow-step skipped">Putaran 4 — tidak dijalankan</div>
+        <div class="flow-step skipped">Putaran 5 — tidak dijalankan</div>
+      </div>
+
+      <div class="loop-demo">
+        <div class="loop-controls">
+          <label class="loop-label">Cari angka: <input type="number" id="break-target" value="4" min="1" max="10" /></label>
+          <label class="loop-label">Loop dari 1 sampai: <input type="number" id="break-max" value="10" min="5" max="20" /></label>
+          <button class="btn-run" onclick="runBreak()">▶ Cari &amp; Break</button>
+        </div>
+        <div class="loop-output-wrap">
+          <div class="loop-code-label">Kode:</div>
+          <div class="loop-code-display" id="break-code-display"></div>
+          <div class="loop-output-label">Output:</div>
+          <div class="loop-output" id="break-output"></div>
+        </div>
+      </div>
+
+      <div class="example-cards">
+        <div class="example-card">
+          <div class="example-title">Contoh: cari nama di daftar</div>
+          <pre class="code-block"><span class="kw">const</span> daftar = [<span class="str">"Ali"</span>, <span class="str">"Budi"</span>, <span class="str">"Citra"</span>, <span class="str">"Deni"</span>];
+<span class="kw">const</span> cari = <span class="str">"Citra"</span>;
+
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; daftar.length; i++) {
+  <span class="kw">if</span> (daftar[i] === cari) {
+    console.log(<span class="str">"Ketemu di index:"</span> + i);
+    <span class="kw">break</span>; <span class="comment">// stop! tidak perlu lanjut</span>
+  }
+}
+<span class="comment">// Output: Ketemu di index: 2</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 CONTINUE -->
+    <section class="section" id="continue">
+      <div class="section-label">08 — continue</div>
+      <h2><code class="op">continue</code> — Lewati putaran ini saja</h2>
+      <p class="desc">
+        <code>continue</code> berbeda dengan <code>break</code> — ia tidak menghentikan loop,
+        hanya <strong>melewati sisa kode di putaran ini</strong> dan langsung lanjut ke putaran berikutnya.
+      </p>
+
+      <div class="compare-row">
+        <div class="compare-col">
+          <div class="compare-label" style="color:var(--false)">break → keluar total dari loop</div>
+          <div class="mini-flow">
+            <div class="mf-step active">1 ✓</div>
+            <div class="mf-step active">2 ✓</div>
+            <div class="mf-step stop">3 🛑</div>
+            <div class="mf-step skip">4</div>
+            <div class="mf-step skip">5</div>
+          </div>
+        </div>
+        <div class="compare-col">
+          <div class="compare-label" style="color:var(--accent)">continue → lewati putaran 3, tetap lanjut</div>
+          <div class="mini-flow">
+            <div class="mf-step active">1 ✓</div>
+            <div class="mf-step active">2 ✓</div>
+            <div class="mf-step skip-cont">3 ⏭</div>
+            <div class="mf-step active">4 ✓</div>
+            <div class="mf-step active">5 ✓</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loop-demo" style="margin-top:24px">
+        <div class="loop-controls">
+          <label class="loop-label">Loop dari 1 sampai: <input type="number" id="cont-max" value="10" min="5" max="20" /></label>
+          <label class="loop-label">Lewati kelipatan: <input type="number" id="cont-skip" value="3" min="2" max="5" /></label>
+          <button class="btn-run" onclick="runContinue()">▶ Jalankan</button>
+        </div>
+        <div class="loop-output-wrap">
+          <div class="loop-code-label">Kode:</div>
+          <div class="loop-code-display" id="cont-code-display"></div>
+          <div class="loop-output-label">Output:</div>
+          <div class="loop-output" id="cont-output"></div>
+        </div>
+      </div>
+
+      <div class="example-cards">
+        <div class="example-card">
+          <div class="example-title">Contoh: cetak angka ganjil saja</div>
+          <pre class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">10</span>; i++) {
+  <span class="kw">if</span> (i % <span class="num">2</span> === <span class="num">0</span>) {
+    <span class="kw">continue</span>; <span class="comment">// lewati angka genap</span>
+  }
+  console.log(i);
+}
+<span class="comment">// Output: 1, 3, 5, 7, 9</span></pre>
+        </div>
+        <div class="example-card">
+          <div class="example-title">Contoh: skip data kosong</div>
+          <pre class="code-block"><span class="kw">const</span> nilai = [<span class="num">80</span>, <span class="kw">null</span>, <span class="num">90</span>, <span class="kw">null</span>, <span class="num">75</span>];
+
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; nilai.length; i++) {
+  <span class="kw">if</span> (nilai[i] === <span class="kw">null</span>) <span class="kw">continue</span>;
+  console.log(<span class="str">"Nilai:"</span>, nilai[i]);
+}
+<span class="comment">// Output: Nilai: 80, Nilai: 90, Nilai: 75</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 CONTROL FLOW -->
+    <section class="section" id="controlflow">
+      <div class="section-label">09 — Control Flow</div>
+      <h2>Control Flow — Menentukan jalur program</h2>
+      <p class="desc">
+        Control flow adalah cara program memilih <strong>jalur mana yang dijalankan</strong> berdasarkan kondisi.
+        Dengan <code>if</code>, <code>else if</code>, <code>else</code>, dan <code>switch</code>
+        program bisa mengambil keputusan seperti manusia.
+      </p>
+
+      <div class="cf-demo">
+        <div class="cf-title">Simulator nilai rapor — geser angka dan lihat hasilnya</div>
+        <div class="cf-slider-row">
+          <span class="cf-slider-label">0</span>
+          <input type="range" id="cf-nilai" value="75" min="0" max="100" oninput="runControlFlow()" />
+          <span class="cf-slider-label">100</span>
+          <span class="cf-slider-val" id="cf-val-display">75</span>
+        </div>
+        <div class="cf-output-row">
+          <div class="cf-code-panel">
+            <pre class="code-block"><span class="kw">const</span> nilai = <span id="cf-code-val" class="num">75</span>;
+
+<span class="kw">if</span> (nilai >= <span class="num">90</span>) {
+  grade = <span class="str">"A — Sempurna!"</span>
+} <span class="kw">else if</span> (nilai >= <span class="num">80</span>) {
+  grade = <span class="str">"B — Bagus!"</span>
+} <span class="kw">else if</span> (nilai >= <span class="num">70</span>) {
+  grade = <span class="str">"C — Cukup"</span>
+} <span class="kw">else if</span> (nilai >= <span class="num">60</span>) {
+  grade = <span class="str">"D — Perlu usaha"</span>
+} <span class="kw">else</span> {
+  grade = <span class="str">"E — Remedial"</span>
+}</pre>
+          </div>
+          <div class="cf-result-panel" id="cf-result-panel">
+            <div class="cf-result-icon" id="cf-result-icon">📝</div>
+            <div class="cf-result-grade" id="cf-result-grade">C — Cukup</div>
+            <div class="cf-result-nilai">Nilai: <span id="cf-result-nilai">75</span></div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin:40px 0 10px;font-size:1.2rem;font-weight:700">Switch — lebih rapi untuk banyak kondisi spesifik</h3>
+      <p class="desc">Kalau kondisinya banyak dan spesifik, <code>switch</code> lebih rapi dari if/else berantai.</p>
+
+      <div class="example-cards">
+        <div class="example-card">
+          <div class="example-title">if/else — makin banyak makin panjang</div>
+          <pre class="code-block"><span class="kw">if</span> (hari === <span class="str">"Senin"</span>) {
+  console.log(<span class="str">"Olahraga"</span>);
+} <span class="kw">else if</span> (hari === <span class="str">"Rabu"</span>) {
+  console.log(<span class="str">"Matematika"</span>);
+} <span class="kw">else if</span> (hari === <span class="str">"Jumat"</span>) {
+  console.log(<span class="str">"Pramuka"</span>);
+} <span class="kw">else</span> {
+  console.log(<span class="str">"Bebas"</span>);
+}</pre>
+        </div>
+        <div class="example-card">
+          <div class="example-title">switch — sama hasilnya, lebih rapi</div>
+          <pre class="code-block"><span class="kw">switch</span> (hari) {
+  <span class="kw">case</span> <span class="str">"Senin"</span>:
+    console.log(<span class="str">"Olahraga"</span>);
+    <span class="kw">break</span>;
+  <span class="kw">case</span> <span class="str">"Rabu"</span>:
+    console.log(<span class="str">"Matematika"</span>);
+    <span class="kw">break</span>;
+  <span class="kw">case</span> <span class="str">"Jumat"</span>:
+    console.log(<span class="str">"Pramuka"</span>);
+    <span class="kw">break</span>;
+  <span class="kw">default</span>:
+    console.log(<span class="str">"Bebas"</span>);
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 QUIZ -->
+    <section class="section" id="quiz">
+      <div class="section-label">10 — Tantangan</div>
+      <h2>Tebak hasilnya! 🎯</h2>
+      <p class="desc">Tanpa menjalankan kode, tebak apakah hasilnya <code>true</code> atau <code>false</code>.</p>
+      <div class="quiz-container" id="quiz-container"></div>
+      <div class="quiz-score" id="quiz-score"></div>
+      <button class="btn-run" id="btn-reset-quiz" onclick="buildQuiz()" style="display:none;margin-top:16px">🔄 Ulangi Kuis</button>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Dibuat untuk belajar JavaScript — Boolean, Logical Operators &amp; Loops</p>
+  </footer>
+
+  <script src="practice-js.js"></script>
+</body>
+</html>
